@@ -8,7 +8,8 @@ app.controller('resumeController',function($scope){
       var i=10;
 
 $scope.resume = function(name,contact,address,education,skills,careerObjective,onlineProfile,certificates,projects){
-      var doc = new jsPDF();
+      /*Creating a jsPDF object*/
+	var doc = new jsPDF(); 
       
 	  $scope.educationArr.push(education);
 	  $scope.skillsArr.push(skills);
