@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Builder</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script type="text/javascript" src="javascripts/resume.js"></script>
+    <meta name="viewport" content="width=device-width , initial-scale=1">
+<style type="text/css">
+  .header {
+            padding: 49px;
+            text-align: center;
+            background: #1abc9c;
+            color: white;
+            font-family: Georgia;
+            font-size: 28px;
+      }
+      .subheader {
+            padding: 5px;
+            background: #1abc9c;
+      }
+
+  html, body {
+      min-height: 100%;
+      }
+      body, div, form, input, select, p { 
+      padding: 0;
+      margin: 0;
+      outline: none;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 14px;
+      color: #666;
+      line-height: 22px;
+      }
+      h1 {
+      position: absolute;
+      margin: 0;
+      font-size: 38px;
+      color: #fff;
+      z-index: 2;
+      }
+      
+      form {
+      width: 100%;
+      padding: 20px;
+      border-radius: 6px;
+      background: #fff;
+      box-shadow: 0 0 25px 0 #1c87c9; 
+      }
+     
+      
+      input, select, textarea {
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      }
+      input {
+      width: calc(100% - 10px);
+      padding: 5px;
+      }
+      
+      select {
+      width: 100%;
+      padding: 7px 0;
+      background: transparent;
+      }
+      .item:hover p, .item:hover i, .question:hover p, .question label:hover, input:hover::placeholder {
+      color: #1c87c9;
+      }
+      .item input:hover, .item select:hover {
+      border: 1px solid transparent;
+      box-shadow: 0 0 6px 0 #1c87c9;
+      color: #1c87c9;
+      }
+      .item {
+      position: relative;
+      margin: 10px 0;
+      }
+      
+      .item i, input[type="date"]::-webkit-calendar-picker-indicator {
+      position: absolute;
+      font-size: 20px;
+      color: #a9a9a9;
+      }
+      .item i {
+      right: 2%;
+      top: 30px;
+      z-index: 1;
+      }
+      
+
+      span.required {
+      margin-left: 0;
+      color: red;
+      }
+      
+      button {
+      width: auto;
+      padding: 10px;
+      border: none;
+      border-radius: 5px; 
+      background: #1c87c9;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      }
+      button:hover {
+      background: #1e6fa0;
+      }
+      @media (min-width: 568px) {
+      .name-item, .contact-item, .position-item,.number-item,.address-item {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      }
+      .name-item input {
+      width: calc(50% - 20px);
+      }
+      .contact-item .item, .position-item .item {
+      width: calc(50% - 8px);
+      }
+      .contact-item input, .position-item input {
+      width: calc(100% - 12px);
+      }
+      .number-item input {
+        width: calc(50% - 20px);
+      }
+
+      .address-item input {
+        width: calc(50% - 20px);
+      }
+      
+      .btn {
+    background-color: #1abc9c;
+  }
+
+      }
+</style>
+    
+
+</head>
+<body ng-app="resumeApp">
+  <p id=#ignorePDF></p>
+    <div class="container-fluid">
+        <div ng-controller="resumeController" class="col-md-4 col-md-offset-4">
+            <form class="form-group">
+
+              <div class="header">
+                <h1>Resume Builder</h1>
+              </div>
+                <br>
+              <div class="subheader"></div>
+                <br>
+
+
+
+              <div class="item">
+                  <legend>General</legend>
+                  <label>Name<span class="required">*</span></label>
+                  <div class="name-item">
+                    <input type="text" class="form-control" placeholder="First Name" ng-model="name.fn" required/>
+                    <input type="text" class="form-control" placeholder="Last Name" ng-model="name.ln" required/>
+                  </div>
+
+                  <br>
+
+                  <div class="contact-item">
+                    <label>Email<span class="required">*</span></label>
+                    <input type="email" class="form-control" placeholder="Email" ng-model="contact.email" required/>
+                  </div>
+
+                  <br>
+
+                  <label>Phone<span class="required">*</span></label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                  <label>Zip Code</label>
+                  <div class="number-item">
+                    <input type="text" class="form-control" placeholder="Phone" ng-model="contact.phone" maxlength="10" required/>
+                    <input type="text" class="form-control" placeholder="Zip Code" ng-model="addresss.zip">
+                  </div>
+
+                  <br>
+
+                  <label>City<span class="required">*</span></label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                  <label>State<span class="required">*</span></label>
+                  <div class="address-item">
+                    <input type="text" class="form-control" placeholder="City" ng-model="address.city" required/>
+                    <input type="text" class="form-control" placeholder="State" ng-model="address.state" required/>
+                  </div>
+
+                  <br>
+
+                  <legend>Education</legend>
+                  <div class=education></div>
+                      <label>Degree</label>
+                      <fieldset>
+                            <select class="form-control dropdown" id="education" ng-model="education.degree">
+                              <option value="" selected="selected" disabled="disabled">-- select one --</option>
+                              <option value="Primary education">Primary education</option>
+                              <option value="Secondary education">Secondary education or high school</option>
+                              <option value="Higher Secondary">Higher Secondary(12th)</option>
+                              <option value="Diploma">Diploma</option>
+                              <option value="Vocational qualification">Vocational qualification</option>
+                              <option value="Bachelor's degree">Bachelor's degree</option>
+                              <option value="Master's degree">Master's degree</option>
+                              <option value="Doctorate or higher">Doctorate or higher</option>
+                            </select>
+                      </fieldset>
+                      <br>
+                      <label>Field Of Study</label>
+                          <input type="text" class="form-control" placeholder="Field Of Study" ng-model="education.fieldOfStudy">
+                      <br>
+                      <label>School/College Name</label>
+                          <input type="text" class="form-control" placeholder="School/College" ng-model="education.school">
+                      <br>
+                      <label>Percentage</label>
+                          <input type="text" class="form-control" placeholder="Percentage" ng-model="education.percentage">
+                      <br>
+                      <label>Duration</label>
+                          <input type="text" class="form-control" placeholder="Duration" ng-model="education.duration">
+                      <br>
+                      <button  ng-click="edu(education)" class="btn btn-info pull-right">Add Another Education</button>
+                  </div>
+
+                  <br>
+
+                  <legend>Skills</legend>
+                  <input type="text" class="form-control" placeholder="Add Skill" ng-model="skills.skill">
+                      <br>
+                  <button  ng-click="skill(skills)" class="btn pull-right">Add Another Skill</button>
+                  <br>
+
+
+                  <legend>Career Objective</legend>
+                  <textarea class="form-control" ng-model="careerObjective.co"></textarea>
+                  <br>
+
+                  <legend>Online Profile</legend>
+                  <textarea class="form-control" ng-model="onlineProfile.profile"></textarea>
+                      <br>
+                  <button  class="btn pull-right" ng-click="op(onlineProfile)">Add Another Profile</button>
+                  <br>
+
+                  <legend>Certifications and licenses</legend>
+                  <textarea class="form-control" ng-model="certificates.certificate"></textarea>
+                      <br>
+                  <button  class="btn pull-right" ng-click="certificate(certificates)">Add Another Item</button>
+                  <br>
+
+                  <legend>Projects and Internships</legend>
+                  <textarea class="form-control" ng-model="projects.pro"></textarea>
+                      <br>
+                  <button class="btn pull-right" ng-click="project(projects)">Add Another Item</button>
+                  <br><br>
+
+                  <div style="text-align:center">
+                <button ng-click="resume(name,contact,address,education,skills,careerObjective,onlineProfile,certificates,projects)" class="btn">Download Resume</button>
+              </div>
+
+
+              
+              </div>
+
+                  
+              
+            </form>
+        </div>
+    </div>
+</body>
+
+
+</html>
